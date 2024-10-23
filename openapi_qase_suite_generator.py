@@ -52,6 +52,7 @@ import sys
 import requests
 import argparse
 import yaml
+import os
 
 ###############################################################################
 # CONFIG
@@ -80,12 +81,28 @@ class Config:
         self.qase_root_suite_id = qase_root_suite_id
 
 
+def get_version() -> str:
+    """Get version from git or version file"""
+    version = "0.0.0"
+    if os.path.exists('VERSION'):
+        with open('VERSION', 'r') as f:
+            version = f.read().strip()
+    name = "openapi_qase_suite_generator"
+    return f"{name} {version}"
+
+
 def parse_args(args: list[str]) -> Config:
     """
     Parse the command line arguments
     """
     parser = argparse.ArgumentParser(
         description="Generate a Qase suite from an OpenAPI spec"
+    )
+
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=get_version()
     )
 
     parser.add_argument(
@@ -428,7 +445,8 @@ def create_qase_suite(
 ###############################################################################
 
 
-def main(args: list[str]):
+def main():
+    args = sys.argv[1:]
     config = parse_args(args)
     api_tree = load_tree_from_openapi_file(config.file)
     # debug_api_tree(api_tree)
@@ -443,4 +461,4 @@ def main(args: list[str]):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()

@@ -32,7 +32,7 @@ The script will generate a new Qase suite only if it does not exist yet.
 
 Usage:
 ```
-  ./generate_qase_suites.py \
+  generate_qase_suites \
     --api-definition <path-to-openapi-spec> \
     --qase-api-token <qase-api-token> \
     --qase-project-id <qase-project-id> \
