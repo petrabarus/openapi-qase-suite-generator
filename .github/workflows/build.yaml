@@ -31,6 +31,8 @@ jobs:
           pip install -r requirements.dev.txt
 
       - name: Pycodestyle
+        # skip if release
+        if: github.event_name != 'release'
         uses: petrabarus/github-action-pycodestyle@v1.0.0
         with:
           base: main
@@ -73,6 +75,8 @@ jobs:
           repository-url: https://pypi.org/legacy/
 
       - name: SonarCloud Scan
+        # skip if release
+        if: github.event_name != 'release'
         uses: SonarSource/sonarcloud-github-action@master
         continue-on-error: true
         env:
