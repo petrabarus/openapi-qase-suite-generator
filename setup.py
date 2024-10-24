@@ -5,14 +5,10 @@ import os
 
 
 def get_version():
-    """Get version from git or version file"""
-    version = "0.0.0"  # Default version
-
-    # Try to get version from VERSION file (created by CI)
-    if os.path.exists('VERSION'):
-        with open('VERSION', 'r') as f:
-            version = f.read().strip()
-
+    import os
+    
+    # Try to get version from environment variable
+    version = os.environ.get('PACKAGE_VERSION', '0.0.0')
     return version
 
 

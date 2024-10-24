@@ -62,6 +62,8 @@ jobs:
           echo $VERSION > VERSION
 
       - name: Build
+        env:
+          PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
         run: |
           python -m build
 
