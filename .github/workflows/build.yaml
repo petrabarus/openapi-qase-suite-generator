@@ -38,7 +38,7 @@ jobs:
       - name: Pycodestyle
         # skip if release
         if: github.event_name != 'release'
-        uses: petrabarus/github-action-pycodestyle@v1.0.0
+        uses: petrabarus/github-action-pycodestyle@v1.0.2
         with:
           base: main
           exclude: '*.pyc,*.pyo,*.pyd'
