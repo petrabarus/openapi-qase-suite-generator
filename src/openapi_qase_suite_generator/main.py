@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # coding: utf-8
 #
 # This script generates a Qase suite from an OpenAPI spec YAML file.
@@ -83,10 +82,8 @@ class Config:
 
 def get_version() -> str:
     """Get version from git or version file"""
-    version = "0.0.0"
-    if os.path.exists('VERSION'):
-        with open('VERSION', 'r') as f:
-            version = f.read().strip()
+    from .__version import __version__
+    version = __version__
     name = "openapi_qase_suite_generator"
     return f"{name} {version}"
 
