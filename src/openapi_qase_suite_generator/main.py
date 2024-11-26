@@ -312,6 +312,8 @@ def get_all_suites(config: Config) -> dict[int, QaseSuite]:
                 suite["description"]
             )
         offset += limit
+    # sort by id to have a stable order
+    # suites = dict(sorted(suites.items(), key=lambda x: x[0]))
 
     return suites
 
@@ -371,7 +373,9 @@ def sync_api_tree_with_qase_tree(
     api_tree_children = api_tree.children
     api_tree_children.sort(key=lambda x: x.path)
     qase_tree_children = qase_tree.children
-    qase_tree_children.sort(key=lambda x: x.suite.title)
+    # sort by title and id to have a stable order rather than random
+    qase_tree_children.sort(key=lambda x: (x.suite.title, x.suite.id))
+    # qase_tree_children.sort(key=lambda x: x.suite.id)
 
     for api_tree_child in api_tree_children:
         found = False

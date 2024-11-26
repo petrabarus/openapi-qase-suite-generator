@@ -194,14 +194,25 @@ class TestSyncSuites(TestCase):
             qase_root_suite_id=1
         )
         api_tree = ApiTreeNode()
+        api_tree_child1 = ApiTreeNode("path", "path1")
+        api_tree_child2 = ApiTreeNode("path", "path2")
+        api_tree_child3 = ApiTreeNode("path", "test4")
         api_tree.children = [
-            ApiTreeNode("path1", "path1"),
-            ApiTreeNode("path2", "path2")
+            api_tree_child1,
+            api_tree_child2,
+            api_tree_child3
         ]
+        api_tree_child3.children = [
+            ApiTreeNode("operation", "test3")
+        ]
+
         qase_tree = QaseSuiteTreeNode(QaseSuite(1, "test", 0, "test123"))
         qase_tree.children = [
             QaseSuiteTreeNode(QaseSuite(2, "test2", 1, "test1232")),
-            QaseSuiteTreeNode(QaseSuite(3, "test3", 1, "test1233"))
+            QaseSuiteTreeNode(QaseSuite(3, "test3", 1, "test1233")),
+            QaseSuiteTreeNode(QaseSuite(4, "test2", 1, "test1233")),
+            QaseSuiteTreeNode(QaseSuite(6, "test4", 1, "test1233")),
+            QaseSuiteTreeNode(QaseSuite(5, "test4", 1, "test1233"))
         ]
         sync_api_tree_with_qase_tree(
             config,
