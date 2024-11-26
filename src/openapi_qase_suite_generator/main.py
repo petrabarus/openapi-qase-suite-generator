@@ -193,13 +193,13 @@ def insert_into_api_tree(
     current_node.children.append(node)
 
 
-# def debug_api_tree(root: ApiTreeNode, level: int = 0):
-#     """
-#     Debug the API tree
-#     """
-#     for child in root.children:
-#         print("  " * level + child.path)
-#         debug_api_tree(child, level + 1)
+def debug_api_tree(root: ApiTreeNode, level: int = 0):
+    """
+    Debug the API tree
+    """
+    for child in root.children:
+        print("  " * level + child.path)
+        debug_api_tree(child, level + 1)
 
 
 def load_tree_from_openapi_file(file_path: str) -> ApiTreeNode:
@@ -318,12 +318,12 @@ def get_all_suites(config: Config) -> dict[int, QaseSuite]:
     return suites
 
 
-# def debug_qase_suites(suites: dict[int, QaseSuite]):
-#     """
-#     Debug the Qase suites
-#     """
-#     for suite in suites.values():
-#         print(suite.id, suite.title, suite.parent_id, suite.description)
+def debug_qase_suites(suites: dict[int, QaseSuite]):
+    """
+    Debug the Qase suites
+    """
+    for suite in suites.values():
+        print(suite.id, suite.title, suite.parent_id, suite.description)
 
 
 def build_qase_suite_tree(
@@ -342,16 +342,16 @@ def build_qase_suite_tree(
     return root_node
 
 
-# def debug_qase_suite_tree(
-#         root: QaseSuiteTreeNode,
-#         level: int = 0
-#         ):
-#     """
-#     Debug the Qase suite tree
-#     """
-#     print("  " * level + root.suite.title)
-#     for child in root.children:
-#         debug_qase_suite_tree(child, level + 1)
+def debug_qase_suite_tree(
+        root: QaseSuiteTreeNode,
+        level: int = 0
+        ):
+    """
+    Debug the Qase suite tree
+    """
+    print("  " * level + root.suite.title)
+    for child in root.children:
+        debug_qase_suite_tree(child, level + 1)
 
 
 ###############################################################################
@@ -449,15 +449,19 @@ def create_qase_suite(
 def main():
     args = sys.argv[1:]
     config = parse_args(args)
+    print(f"Loading API tree from {config.file}...")
     api_tree = load_tree_from_openapi_file(config.file)
-    # debug_api_tree(api_tree)
+    debug_api_tree(api_tree)
+    print("Getting all Qase suites...")
     suites = get_all_suites(config)
-    # debug_qase_suites(suites)
+    debug_qase_suites(suites)
+    print("Building Qase suite tree...")
     qase_tree = build_qase_suite_tree(
         config.qase_root_suite_id,
         suites
     )
-    # debug_qase_suite_tree(qase_tree)
+    debug_qase_suite_tree(qase_tree)
+    print("Syncing API tree with Qase tree...")
     sync_api_tree_with_qase_tree(config, api_tree, qase_tree)
 
 
