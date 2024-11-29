@@ -336,9 +336,11 @@ def build_qase_suite_tree(
     root_suite = suites[root_suite_id]
     root_node = QaseSuiteTreeNode(root_suite)
     for suite in suites.values():
+        print(root_suite_id, suite.id, suite.title, suite.parent_id)
         if suite.parent_id == root_suite_id:
-            root_node.children.append(QaseSuiteTreeNode(suite))
-            build_qase_suite_tree(suite.id, suites)
+            print(f"Appending {suite.title} to {root_suite.title}")
+            node = build_qase_suite_tree(suite.id, suites)
+            root_node.children.append(node)
     return root_node
 
 

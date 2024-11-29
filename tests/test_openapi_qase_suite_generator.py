@@ -172,15 +172,28 @@ class TestQaseSuite(TestCase):
             1: QaseSuite(1, "test", 0, "test123"),
             2: QaseSuite(2, "test2", 1, "test1232"),
             3: QaseSuite(3, "test3", 1, "test1233"),
+            4: QaseSuite(4, "test4", 1, "test1234"),
+            5: QaseSuite(5, "test5", 1, "test1235"),
+            6: QaseSuite(6, "test6", 2, "test1236"),
+            7: QaseSuite(7, "test7", 2, "test1237"),
+            8: QaseSuite(8, "test8", 3, "test1238"),
+            9: QaseSuite(9, "test9", 3, "test1239"),
+            10: QaseSuite(10, "test10", 3, "test12310")
         }
         tree = build_qase_suite_tree(
             suite_id,
             suites
         )
-        self.assertEqual(len(tree.children), 2)
+        self.assertEqual(len(tree.children), 4)
         child1 = tree.children[0]
+        self.assertEqual(child1.suite.title, "test2")
         self.assertEqual(child1.suite, suites[2])
-        self.assertEqual(len(child1.children), 0)
+        self.assertEqual(len(child1.children), 2)
+
+        child2 = tree.children[1]
+        self.assertEqual(child2.suite.title, "test3")
+        self.assertEqual(child2.suite, suites[3])
+        self.assertEqual(len(child2.children), 3)
 
 
 class TestSyncSuites(TestCase):
